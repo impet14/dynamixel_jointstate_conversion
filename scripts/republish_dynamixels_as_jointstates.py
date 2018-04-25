@@ -36,7 +36,6 @@ def convert(dynamixel_msg):
 
     return sensor_msg
 
-
 if __name__ == "__main__":
     rospy.init_node("republish_dynamixel_jointstates", log_level=rospy.INFO)
 
