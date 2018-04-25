@@ -24,6 +24,7 @@ from sensor_msgs.msg import JointState as sensJointState
 # float64[] velocity    # the velocity of the joint (rad/s or m/s)
 # float64[] effort      # the effort that is applied in the joint (Nm or N)
 
+
 def convert(dynamixel_msg):
     """Convert a dynamixel_msgs/JointState to a sensor_msgs/JointState
     sensor_msgs/JointState consists of a list of joints but we publish one at a time"""
@@ -31,15 +32,21 @@ def convert(dynamixel_msg):
                                 name=[dynamixel_msg.name],
                                 position=[dynamixel_msg.current_pos],
                                 velocity=[dynamixel_msg.velocity],
-                                effort=[dynamixel_msg.load],  # TODO: verify the units of this are the same
+                                # TODO: verify the units of load and effort are the same
+                                # I assume dynamixel load is also in Nm or N
+                                effort=[dynamixel_msg.load],
                                 )
 
     return sensor_msg
 
+
 if __name__ == "__main__":
     rospy.init_node("republish_dynamixel_jointstates", log_level=rospy.INFO)
 
-    joint_state_pub = rospy.Publisher("joint_states", sensJointState, queue_size=1)
-    dynamixel_joint_topic = rospy.Subscriber("dynamixel_topic", dynJointState, lambda msg: joint_state_pub.publish(convert(msg)))
+    joint_state_pub = rospy.Publisher(
+        "joint_states", sensJointState, queue_size=1)
+
+    dynamixel_joint_topic = rospy.Subscriber(
+        "dynamixel_topic", dynJointState, lambda msg: joint_state_pub.publish(convert(msg)))
 
     rospy.spin()
