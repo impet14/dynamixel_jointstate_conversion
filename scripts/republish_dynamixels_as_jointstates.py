@@ -38,9 +38,9 @@ def convert(dynamixel_msg):
 
 
 if __name__ == "__main__":
-    rospy.init_node("republish_dynamixels_as_jointstates", log_level=rospy.INFO)
+    rospy.init_node("republish_dynamixel_jointstates", log_level=rospy.INFO)
 
-    dynamixel_joint_topics = ['pan']#rospy.get_param("dynamixel_joint_topics")
+    dynamixel_joint_topics = rospy.get_param("~dynamixel_joint_topics")
 
     joint_state_pub = rospy.Publisher("joint_states", sensJointState, queue_size=1)
 

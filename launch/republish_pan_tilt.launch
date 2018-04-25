@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="machine" default="localhost"/>
+
+    <node name="republish_dynamixel_jointstates" pkg="dynamixel_jointstate_conversion" type="republish_dynamixels_as_jointstates.py" required="true">
+        <rosparam param="dynamixel_joint_topics">[neck_pan, neck_tilt]</rosparam>
+    </node>
+</launch>
