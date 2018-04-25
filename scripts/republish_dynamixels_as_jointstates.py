@@ -40,13 +40,7 @@ def convert(dynamixel_msg):
 if __name__ == "__main__":
     rospy.init_node("republish_dynamixel_jointstates", log_level=rospy.INFO)
 
-    dynamixel_joint_topics = rospy.get_param("~dynamixel_joint_topics")
-
     joint_state_pub = rospy.Publisher("joint_states", sensJointState, queue_size=1)
-
-    for dynamixel_joint_topic in dynamixel_joint_topics:
-        rospy.Subscriber(dynamixel_joint_topic,
-                         dynJointState,
-                         lambda msg: joint_state_pub.publish(convert(msg)))
+    dynamixel_joint_topic = rospy.Subscriber("dynamixel_topic", dynJointState, lambda msg: joint_state_pub.publish(convert(msg)))
 
     rospy.spin()

@@ -2,7 +2,12 @@
 <launch>
     <arg name="machine" default="localhost"/>
 
-    <node name="republish_dynamixel_jointstates" pkg="dynamixel_jointstate_conversion" type="republish_dynamixels_as_jointstates.py" required="true">
-        <rosparam param="dynamixel_joint_topics">[neck_pan, neck_tilt]</rosparam>
+    <node name="republish_dynamixel_tilt_jointstates" pkg="dynamixel_jointstate_conversion" type="republish_dynamixels_as_jointstates.py" required="true">
+        <remap to="neck_tilt" from="dynamixel_topic"/>
+    </node>
+
+
+    <node name="republish_dynamixel_pan_jointstates" pkg="dynamixel_jointstate_conversion" type="republish_dynamixels_as_jointstates.py" required="true">
+        <remap to="neck_pan" from="dynamixel_topic"/>
     </node>
 </launch>
